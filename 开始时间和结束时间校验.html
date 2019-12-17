@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+</head>
+
+<body>
+    <div class="container">
+    <form action="" class="form-horizontal"  role="form">
+        <fieldset>
+            <legend>Test</legend>
+            <div class="form-group">
+                <label for="dtp_input3" class="col-md-2 control-label">开始时间:</label>
+                <div class="input-group date startDate col-md-5" data-date="" data-date-format="" data-link-field="dtp_input3" >
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>	
+            <div class="form-group">
+                <label for="dtp_input3" class="col-md-2 control-label">结束时间:</label>
+                <div class="input-group date endDate col-md-5" data-date="" data-date-format="" data-link-field="dtp_input3" >
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>		
+        </fieldset>
+    </form>
+</div>
+</body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<script src="js/bootstrap-datetimepicker.fr.js"></script>
+<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+
+// 开始时间设置
+$('.startDate').datetimepicker({
+    // language:  'fr',
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    weekStart: 0, // 从哪天开始
+    todayBtn: 1, // 是否显示今天这个按钮
+    autoclose: 1, // 自动关闭
+    todayHighlight: 1,
+    startView: 2,
+    minView: 'month',    //选择日期后，不会再跳转去选择时分秒 
+    forceParse: 0,
+    // startDate:new Date()   // 从今天开始往后选择
+    // startDate:'2019-3-10'
+    // endDate:new Date()   // 只能选择今天往前的的时间
+}).on('click',function(){
+    $(".startDate").datetimepicker("setEndDate",$(".end").val())
+});
+// $('.startDate').datetimepicker('setDate',new Date());
+// 结束时间设置
+$('.endDate').datetimepicker({
+    // language:  'fr',
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    weekStart: 0, // 从哪天开始
+    todayBtn: 1, // 是否显示今天这个按钮
+    autoclose: 1, // 自动关闭
+    todayHighlight: 1,
+    startView: 2,
+    minView: 'month',    //选择日期后，不会再跳转去选择时分秒 
+    forceParse: 0,
+});
+// $('.endDate').datetimepicker('setDate',new Date());
+// 结束时间不得早于开始时间
+$('.startDate').on('changeDate', function(ev){
+    $('.endDate').datetimepicker('setStartDate', ev.date);
+    var d = $('#endTime').val();
+    if (d) {
+        var date = new Date(d.replace(/-/g, '/'));
+        if(date != 'Invalid Date' && date < ev.date){
+            $('.endDate').datetimepicker('setDate', ev.date)
+        }
+    }
+});
+</script>
+
+</html>
